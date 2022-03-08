@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject mainMenuPanel;
     public GameObject scoreText;
+    public GameObject gameOverScoreText;
+    public GameObject gameOverBestScoreText;
     public GameObject gameOverPanel;
     
     public void StartButton()
@@ -24,8 +26,11 @@ public class UIManager : MonoBehaviour
         scoreText.GetComponent<TextMeshProUGUI>().text = score.ToString();
     }
 
-    public void GameOverMenuOpen()
+    public void GameOverMenuOpen(int score)
     {
+        gameManager.SaveScore(score);
+        gameOverScoreText.GetComponent<TextMeshProUGUI>().text = score.ToString();
+        gameOverBestScoreText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("bestScore").ToString();
         gameOverPanel.SetActive(true);
     }
 }

@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     public void CheckJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !gameManager.isGameOver)
+        if (Input.GetKeyDown(KeyCode.Space) && !gameManager.isGameOver && !gameManager.isGameOnPause)
         {
             playerRB.velocity = new Vector2(0, yForce);
             playerAS.PlayOneShot(jumpSound, 0.5f);
@@ -63,15 +63,20 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Block") && !gameManager.isGameOver)
         {
             gameManager.isGameOver = true;
-            gameManager.isGameActive = false;
+            gameManager.isGameOnPause = true;
 
             playerAnim.SetBool("death", true);
             gameManager.audioManager.GameOverSoundPlay();
 
-            gameManager.uIManager.GameOverMenuOpen();
+            gameManager.uIManager.GameOverMenuOpen(gameManager.score);
         }
 
-        else if (collision.CompareTag("Entry") && !gameManager.isGameOver)
+        
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Entry") && !gameManager.isGameOver)
         {
             gameManager.ScoreUpdate();
         }

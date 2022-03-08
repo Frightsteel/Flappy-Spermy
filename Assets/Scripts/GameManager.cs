@@ -16,12 +16,23 @@ public class GameManager : MonoBehaviour
     public GameObject player;
 
     public int score = 0;
+    public int bestScore;
     public bool isGameOver = false;
-    public bool isGameActive = false;
+    public bool isGameOnPause = true;
 
-    private void Awake()
+    private void Start()
     {
-        PauseGame();
+        switch (mainCamera.GetComponent<CameraController>().isCameraMoved)
+        {
+            case 0:
+                PauseGame();
+                break;
+            case 1:
+                uIManager.StartButton();
+                break;
+        }
+
+        bestScore = PlayerPrefs.GetInt("bestScore");
     }
 
     public void ScoreUpdate()
@@ -35,8 +46,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
         
         audioManager.MainThemePlay();
-
-        mainCamera.GetComponent<CameraAnimation>().CameraMove();
+        
+        mainCamera.GetComponent<CameraController>().CameraMove();
     }
 
     public void ResumeGame()
@@ -44,6 +55,10 @@ public class GameManager : MonoBehaviour
         player.GetComponent<PlayerController>().RBSimulation();
 
         StartCoroutine(spawnManager.SpawnWalls());
+
+        isGameOnPause = false;
+
+        Debug.Log(mainCamera.GetComponent<CameraController>().isCameraMoved);
     }
 
     public void RestartGame()
@@ -55,5 +70,19 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0.0f;
         //audioManager.MainThemePause();
+    }
+
+    public void SaveScore(int score)
+    {
+        if (score > bestScore)
+        {
+            bestScore = score;
+            PlayerPrefs.SetInt("bestScore", bestScore);
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.DeleteKey("isCameraMoved");
     }
 }
