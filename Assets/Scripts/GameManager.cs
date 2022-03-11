@@ -8,9 +8,15 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     internal UIManager uIManager;
     [SerializeField]
-    private SpawnManager spawnManager;
+    internal SpawnManager spawnManager;
     [SerializeField]
     internal AudioManager audioManager;
+    [SerializeField]
+    internal LeaderboardManager leaderboardManager;
+    [SerializeField]
+    internal SaveManager saveManager;
+
+
 
     public GameObject mainCamera;
     public GameObject player;
@@ -33,6 +39,8 @@ public class GameManager : MonoBehaviour
         }
 
         bestScore = PlayerPrefs.GetInt("bestScore");
+
+
     }
 
     public void ScoreUpdate()

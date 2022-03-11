@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public GameObject gameOverScoreText;
     public GameObject gameOverBestScoreText;
     public GameObject gameOverPanel;
+    public GameObject leaderboardPanel;
     
     public void StartButton()
     {
@@ -31,6 +32,15 @@ public class UIManager : MonoBehaviour
         gameManager.SaveScore(score);
         gameOverScoreText.GetComponent<TextMeshProUGUI>().text = score.ToString();
         gameOverBestScoreText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("bestScore").ToString();
+        gameManager.leaderboardManager.SubmitScore();
+        scoreText.SetActive(false);
         gameOverPanel.SetActive(true);
+    }
+
+    public void LeaderboardPanelOpen()
+    {
+        gameManager.leaderboardManager.ShowScores();
+        gameOverPanel.SetActive(false);
+        leaderboardPanel.SetActive(true);
     }
 }
