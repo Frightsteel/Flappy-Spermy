@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     public void CheckJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !gameManager.isGameOver && !gameManager.isGameOnPause)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !gameManager.isGameOver && !gameManager.isGameOnPause)
         {
             playerRB.velocity = new Vector2(0, yForce);
             playerAS.PlayOneShot(jumpSound, 0.5f);

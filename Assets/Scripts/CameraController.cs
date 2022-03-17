@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         isCameraMoved = PlayerPrefs.GetInt("isCameraMoved");
+        Debug.Log("camera");
     }
 
     private void Start()

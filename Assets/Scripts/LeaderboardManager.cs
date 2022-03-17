@@ -17,7 +17,7 @@ public class LeaderboardManager : MonoBehaviour
     public TextMeshProUGUI[] playerNames;
     public TextMeshProUGUI[] playerScores;
 
-    public TextMeshProUGUI playerRankText;
+    public TextMeshProUGUI playerNameText;
     public TextMeshProUGUI playerScoreText;
 
     void Start()
@@ -47,7 +47,9 @@ public class LeaderboardManager : MonoBehaviour
                 {
                     if (memberID.ToString() == scores[i].member_id)
                     {
-                        playerNames[i].text = "You";
+                        playerNames[i].text = (i + 1) + ".You";
+                        playerNames[i].color = new Color32(248,90,90,255);
+                        playerScores[i].color = playerNames[i].color;
                     }
                     playerScores[i].text = scores[i].score.ToString();
                 }
@@ -62,7 +64,7 @@ public class LeaderboardManager : MonoBehaviour
         {
             if (response.success)
             {
-                playerRankText.text = response.rank.ToString();
+                playerNameText.text = response.rank + ".You";
                 playerScoreText.text = response.score.ToString();
             }
             else

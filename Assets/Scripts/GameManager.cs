@@ -39,8 +39,6 @@ public class GameManager : MonoBehaviour
         }
 
         bestScore = PlayerPrefs.GetInt("bestScore");
-
-
     }
 
     public void ScoreUpdate()
@@ -89,8 +87,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnApplicationQuit()
+    private void OnApplicationFocus(bool focus)
     {
-        PlayerPrefs.DeleteKey("isCameraMoved");
+        isGameOnPause = !focus;
+
+        if (isGameOnPause)
+        {
+            PlayerPrefs.DeleteKey("isCameraMoved");
+            Debug.Log("Game is unfocused");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("isCameraMoved", 1);
+            Debug.Log("Game is focused");
+        }
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        isGameOnPause = pauseStatus;
+
+        if (isGameOnPause)
+        {
+            PlayerPrefs.DeleteKey("isCameraMoved");
+            Debug.Log("Game is paused");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("isCameraMoved", 1);
+            Debug.Log("Game is unpaused");
+        }
     }
 }

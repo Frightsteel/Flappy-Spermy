@@ -25,7 +25,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Spawn()
     {
-        int wallInd = Random.Range(0, 14);
+        int wallInd = Random.Range(0, 13);
         Instantiate(wallPrefab[wallInd], spawnPos, wallPrefab[wallInd].transform.rotation);
     }
 }
