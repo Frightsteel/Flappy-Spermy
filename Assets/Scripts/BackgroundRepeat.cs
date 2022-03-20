@@ -5,10 +5,12 @@ using UnityEngine;
 public class BackgroundRepeat : MonoBehaviour
 {
     private GameManager gameManager;
-    
+
+    [SerializeField]
+    private float speed; // 3.0f for back and 5.0f for front
+
     private Vector2 startPos;
     private float repeatWidth = 51.2f;
-    public float speed = 3.0f;
 
     void Start()
     {
@@ -19,17 +21,16 @@ public class BackgroundRepeat : MonoBehaviour
 
     void Update()
     {
-        Move();
-        CheckRepeat();
+        if (!gameManager.isGameOver && !gameManager.isGameOnPause)
+        {
+            Move();
+            CheckRepeat();
+        }
     }
 
     private void Move()
     {
-        if (!gameManager.isGameOver)
-        {
-            transform.Translate(Vector2.left * speed * Time.unscaledDeltaTime);
-            //transform.Translate(Vector2.left * speed * Time.deltaTime);
-        }
+        transform.Translate(Vector2.left * speed * Time.unscaledDeltaTime);
     }
 
     private void CheckRepeat()

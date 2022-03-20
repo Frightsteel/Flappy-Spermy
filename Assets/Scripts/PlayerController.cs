@@ -7,10 +7,9 @@ public class PlayerController : MonoBehaviour
     private GameManager gameManager;
     
     private Rigidbody2D playerRB;
-
     private Animator playerAnim;
     private AudioSource playerAS;
-
+    
     public AudioClip jumpSound;
 
     private float yForce = 8f;
@@ -27,13 +26,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        CheckJump();
+        Jump();
         CheckBorder();
     }
 
-    public void CheckJump()
+    public void Jump()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !gameManager.isGameOver && !gameManager.isGameOnPause)
+        if (/*Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began*/Input.GetKeyDown(KeyCode.Space) && !gameManager.isGameOver && !gameManager.isGameOnPause)
         {
             playerRB.velocity = new Vector2(0, yForce);
             playerAS.PlayOneShot(jumpSound, 0.5f);
@@ -53,7 +52,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void RBSimulation()
+    public void SwitchRBSimulation()
     {
         playerRB.simulated = !playerRB.simulated;
     }
@@ -63,12 +62,9 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Block") && !gameManager.isGameOver)
         {
             gameManager.isGameOver = true;
-            gameManager.isGameOnPause = true;
-
             playerAnim.SetBool("death", true);
             gameManager.audioManager.GameOverSoundPlay();
-
-            gameManager.uIManager.GameOverMenuOpen(gameManager.score);
+            gameManager.uIManager.GameOverMenuOpen();
         }
 
         
@@ -78,7 +74,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Entry") && !gameManager.isGameOver)
         {
-            gameManager.ScoreUpdate();
+            gameManager.scoreController.UpdateScore();
         }
     }
 }

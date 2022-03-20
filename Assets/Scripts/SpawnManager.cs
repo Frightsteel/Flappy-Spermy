@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -11,13 +10,13 @@ public class SpawnManager : MonoBehaviour
 
     private float spawnRate;
 
-    private Vector2 spawnPos = new Vector2(20, 0);
+    private Vector2 spawnPos = new Vector2(7, 0);
 
     public IEnumerator SpawnWalls()
     {
         while (!gameManager.isGameOver)
         {
-            spawnRate = Random.Range(1.0f, 3.0f);
+            spawnRate = Random.Range(1.5f, 2.5f);
             yield return new WaitForSeconds(spawnRate);
             Spawn();
         }

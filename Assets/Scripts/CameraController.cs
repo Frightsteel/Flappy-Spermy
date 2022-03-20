@@ -6,14 +6,14 @@ public class CameraController : MonoBehaviour
 {
     private GameManager gameManager;
     
-    public LeanTweenType easeType;
+    [SerializeField]
+    private LeanTweenType easeType;
 
     public int isCameraMoved = 0;
 
     private void Awake()
     {
         isCameraMoved = PlayerPrefs.GetInt("isCameraMoved");
-        Debug.Log("camera");
     }
 
     private void Start()
@@ -22,18 +22,17 @@ public class CameraController : MonoBehaviour
     }
 
     public void CameraMove()
-    {
-        switch (isCameraMoved)
+    {   
+        if (isCameraMoved == 0)
         {
-            case 0:
-                LeanTween.moveX(gameObject, 0.0f, 4.0f).setEase(easeType).setIgnoreTimeScale(true).setOnComplete(OnComplete);
-                break;
-            case 1:
-                transform.position = new Vector3(0.0f, transform.position.y, transform.position.z);
-                gameManager.ResumeGame();
-                break;
+            LeanTween.moveX(gameObject, 0.0f, 4.0f).setEase(easeType).setIgnoreTimeScale(true).setOnComplete(OnComplete);
         }
-        
+        else
+        {
+            transform.position = new Vector3(0.0f, transform.position.y, transform.position.z);
+            gameManager.ResumeGame();
+        }
+
     }
 
     private void OnComplete()

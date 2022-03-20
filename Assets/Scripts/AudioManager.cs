@@ -29,4 +29,10 @@ public class AudioManager : MonoBehaviour
     {
         audioSource.Pause();
     }
+
+    public void MainThemeUnPause()
+    {
+        audioSource.UnPause();
+
+    }
 }

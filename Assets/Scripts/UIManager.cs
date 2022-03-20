@@ -9,37 +9,44 @@ public class UIManager : MonoBehaviour
     private GameManager gameManager;
 
     public GameObject mainMenuPanel;
-    public GameObject scoreText;
-    public GameObject gameOverScoreText;
-    public GameObject gameOverBestScoreText;
     public GameObject gameOverPanel;
     public GameObject leaderboardPanel;
+    public GameObject pauseButton;
+    public GameObject resumeButton;
+    public GameObject inGameUI;
     
     public void StartButton()
     {
         mainMenuPanel.SetActive(false);
         gameManager.StartGame();
-        scoreText.SetActive(true);
+        inGameUI.SetActive(true);
     }
 
-    public void ScoreTextUpdate(int score)
+    public void PauseButton()
     {
-        scoreText.GetComponent<TextMeshProUGUI>().text = score.ToString();
+        gameManager.PauseGame();
+        pauseButton.SetActive(false);
+        resumeButton.SetActive(true);
     }
 
-    public void GameOverMenuOpen(int score)
+    public void ResumeButton()
     {
-        gameManager.SaveScore(score);
-        gameOverScoreText.GetComponent<TextMeshProUGUI>().text = score.ToString();
-        gameOverBestScoreText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("bestScore").ToString();
+        gameManager.UnPauseGame();
+        resumeButton.SetActive(false);
+        pauseButton.SetActive(true);
+    }
+
+    public void GameOverMenuOpen()
+    {
+        gameManager.scoreController.UpdateScoreText();
         gameManager.leaderboardManager.SubmitScore();
-        scoreText.SetActive(false);
+        inGameUI.SetActive(false);
         gameOverPanel.SetActive(true);
+        gameManager.leaderboardManager.UpdateScores();
     }
 
     public void LeaderboardPanelOpen()
     {
-        gameManager.leaderboardManager.ShowScores();
         gameOverPanel.SetActive(false);
         leaderboardPanel.SetActive(true);
     }

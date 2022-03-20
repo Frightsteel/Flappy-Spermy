@@ -1,19 +1,16 @@
 using LootLocker.Requests;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameManager gameManager;
-
     public int gameID;
 
-    public int playerScore; //best score
-    public int memberID; //account ID
+    [SerializeField]
+    private int memberID; //account ID
+    public int playerBestScore; //best score
 
-    public int maxScores = 5;
+    public int maxScores = 5; //count of scores to show
     public TextMeshProUGUI[] playerNames;
     public TextMeshProUGUI[] playerScores;
 
@@ -35,7 +32,7 @@ public class LeaderboardManager : MonoBehaviour
         });
     }
 
-    public void ShowScores()
+    public void UpdateScores()
     {
         LootLockerSDKManager.GetScoreList(gameID, maxScores, (response) =>
         {
@@ -48,8 +45,7 @@ public class LeaderboardManager : MonoBehaviour
                     if (memberID.ToString() == scores[i].member_id)
                     {
                         playerNames[i].text = (i + 1) + ".You";
-                        playerNames[i].color = new Color32(248,90,90,255);
-                        playerScores[i].color = playerNames[i].color;
+                        playerScores[i].color = playerNames[i].color = new Color32(248,90,90,255);
                     }
                     playerScores[i].text = scores[i].score.ToString();
                 }
@@ -77,9 +73,9 @@ public class LeaderboardManager : MonoBehaviour
     public void SubmitScore()
     {
         memberID = PlayerPrefs.GetInt("PlayerID");
-        playerScore = PlayerPrefs.GetInt("bestScore");
+        playerBestScore = PlayerPrefs.GetInt("bestScore");
 
-        LootLockerSDKManager.SubmitScore(memberID.ToString(), playerScore, gameID, (response) =>
+        LootLockerSDKManager.SubmitScore(memberID.ToString(), playerBestScore, gameID, (response) =>
         {
             if (response.success)
             {

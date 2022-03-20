@@ -5,66 +5,44 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    internal UIManager uIManager;
-    [SerializeField]
-    internal SpawnManager spawnManager;
-    [SerializeField]
-    internal AudioManager audioManager;
-    [SerializeField]
-    internal LeaderboardManager leaderboardManager;
-    [SerializeField]
-    internal SaveManager saveManager;
+    public UIManager uIManager;
+    public SpawnManager spawnManager;
+    public AudioManager audioManager;
+    public LeaderboardManager leaderboardManager;
+    public PlayerIDManager playerIDManager;
 
-
+    public ScoreController scoreController;
 
     public GameObject mainCamera;
     public GameObject player;
-
-    public int score = 0;
-    public int bestScore;
-    public bool isGameOver = false;
-    public bool isGameOnPause = true;
+    
+    public bool isGameOver;
+    public bool isGameOnPause;
 
     private void Start()
     {
-        switch (mainCamera.GetComponent<CameraController>().isCameraMoved)
+        if (mainCamera.GetComponent<CameraController>().isCameraMoved == 0)
         {
-            case 0:
-                PauseGame();
-                break;
-            case 1:
-                uIManager.StartButton();
-                break;
+            StartPause();
         }
-
-        bestScore = PlayerPrefs.GetInt("bestScore");
-    }
-
-    public void ScoreUpdate()
-    {
-        score++;
-        uIManager.ScoreTextUpdate(score);
+        else
+        {
+            uIManager.StartButton();
+        }
     }
 
     public void StartGame()
     {
         Time.timeScale = 1.0f;
-        
         audioManager.MainThemePlay();
-        
         mainCamera.GetComponent<CameraController>().CameraMove();
     }
 
     public void ResumeGame()
     {
-        player.GetComponent<PlayerController>().RBSimulation();
-
+        player.GetComponent<PlayerController>().SwitchRBSimulation();
         StartCoroutine(spawnManager.SpawnWalls());
-
         isGameOnPause = false;
-
-        Debug.Log(mainCamera.GetComponent<CameraController>().isCameraMoved);
     }
 
     public void RestartGame()
@@ -72,50 +50,23 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public void UnPauseGame()
+    {
+        Time.timeScale = 1.0f;
+        isGameOnPause = false;
+        audioManager.MainThemeUnPause();
+    }
+
     public void PauseGame()
     {
         Time.timeScale = 0.0f;
-        //audioManager.MainThemePause();
+        isGameOnPause = true;
+        audioManager.MainThemePause();
     }
 
-    public void SaveScore(int score)
+    public void StartPause()
     {
-        if (score > bestScore)
-        {
-            bestScore = score;
-            PlayerPrefs.SetInt("bestScore", bestScore);
-        }
-    }
-
-    private void OnApplicationFocus(bool focus)
-    {
-        isGameOnPause = !focus;
-
-        if (isGameOnPause)
-        {
-            PlayerPrefs.DeleteKey("isCameraMoved");
-            Debug.Log("Game is unfocused");
-        }
-        else
-        {
-            PlayerPrefs.SetInt("isCameraMoved", 1);
-            Debug.Log("Game is focused");
-        }
-    }
-
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        isGameOnPause = pauseStatus;
-
-        if (isGameOnPause)
-        {
-            PlayerPrefs.DeleteKey("isCameraMoved");
-            Debug.Log("Game is paused");
-        }
-        else
-        {
-            PlayerPrefs.SetInt("isCameraMoved", 1);
-            Debug.Log("Game is unpaused");
-        }
+        Time.timeScale = 0.0f;
+        audioManager.MainThemePause();
     }
 }
