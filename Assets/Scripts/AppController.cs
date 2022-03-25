@@ -8,27 +8,43 @@ public class AppController : MonoBehaviour
 
     private void OnApplicationFocus(bool focus)
     {
-        gameManager.isGameOnPause = !focus;
+        //if (!focus)
+        //{
+        //    gameManager.SwitchGameState(GameManager.GameState.Pause);
+        //}
+        //else
+        //{
+        //    gameManager.SwitchGameState(GameManager.GameState.Playing);
+        //}
 
-        UpdateCameraSave();
+        UpdateCameraSave(!focus);
     }
 
     private void OnApplicationPause(bool pauseStatus)
     {
-        gameManager.isGameOnPause = pauseStatus;
+        //if (pauseStatus)
+        //{
+        //    gameManager.SwitchGameState(GameManager.GameState.Pause);
+        //}
+        //else
+        //{
+        //    gameManager.SwitchGameState(GameManager.GameState.Playing);
+        //}
 
-        UpdateCameraSave();
+        UpdateCameraSave(pauseStatus);
     }
 
-    private void UpdateCameraSave()
+    private void UpdateCameraSave(bool isGameOnPaused)
     {
-        if (gameManager.isGameOnPause)
+        if (isGameOnPaused)
         {
             PlayerPrefs.DeleteKey("isCameraMoved");
+            Debug.Log(1);
         }
         else
         {
             PlayerPrefs.SetInt("isCameraMoved", 1);
+            Debug.Log(2);
         }
     }
 }

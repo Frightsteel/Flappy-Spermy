@@ -23,11 +23,11 @@ public class LeaderboardManager : MonoBehaviour
         {
             if (response.success)
             {
-                Debug.Log("Success");
+                //Debug.Log("Success 0");
             }
             else
             {
-                Debug.Log("Failed");
+                //Debug.Log("Failed 0");
             }
         });
     }
@@ -52,7 +52,7 @@ public class LeaderboardManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Failed");
+                //Debug.Log("Failed 2");
             }
         });
 
@@ -65,7 +65,7 @@ public class LeaderboardManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Failed");
+               //Debug.Log("Failed 3");
             }
         });
     }
@@ -73,17 +73,19 @@ public class LeaderboardManager : MonoBehaviour
     public void SubmitScore()
     {
         memberID = PlayerPrefs.GetInt("PlayerID");
-        playerBestScore = PlayerPrefs.GetInt("bestScore");
+        playerBestScore = PlayerPrefs.GetInt("BestScore");
+        //Debug.Log(playerBestScore + " - submit score");
+        //Debug.Log(memberID + " - member ID");
 
         LootLockerSDKManager.SubmitScore(memberID.ToString(), playerBestScore, gameID, (response) =>
         {
             if (response.success)
             {
-                Debug.Log("Success");
+                UpdateScores();
             }
             else
             {
-                Debug.Log("Failed");
+                //Debug.Log("Failed 1");
             }
         });
     }

@@ -1,5 +1,5 @@
 {
-    "m_SelectedDeviceId": "emulator-5554",
+    "m_SelectedDeviceId": "J5AXB76105395PV",
     "m_SelectedPackage": {
         "deviceId": "",
         "name": "",
@@ -19,6 +19,18 @@
             "name": "com.SteelFrightStudio.FlappySpermy",
             "processId": 5247,
             "exited": true
+        },
+        {
+            "deviceId": "J5AXB76105395PV",
+            "name": "com.asus.launcher",
+            "processId": 27328,
+            "exited": false
+        },
+        {
+            "deviceId": "J5AXB76105395PV",
+            "name": "com.SteelFrightStudio.FlappySpermy",
+            "processId": 17965,
+            "exited": false
         }
     ],
     "m_Tags": {
@@ -29,7 +41,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -45,7 +57,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",

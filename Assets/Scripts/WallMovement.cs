@@ -22,9 +22,9 @@ public class WallMovement : MonoBehaviour
 
     private void Move()
     {
-        if (!gameManager.isGameOver)
+        if (gameManager.currentGameState != GameManager.GameState.GameOver)
         {
-            transform.Translate(Vector2.left * speed * Time.deltaTime);
+            transform.Translate(speed * Time.deltaTime * Vector2.left);
         }
     }
 

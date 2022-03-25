@@ -14,7 +14,7 @@ public class SpawnManager : MonoBehaviour
 
     public IEnumerator SpawnWalls()
     {
-        while (!gameManager.isGameOver)
+        while (gameManager.currentGameState != GameManager.GameState.GameOver)
         {
             spawnRate = Random.Range(1.5f, 2.5f);
             yield return new WaitForSeconds(spawnRate);

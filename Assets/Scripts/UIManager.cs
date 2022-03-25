@@ -14,24 +14,25 @@ public class UIManager : MonoBehaviour
     public GameObject pauseButton;
     public GameObject resumeButton;
     public GameObject inGameUI;
+    public GameObject infoText;
     
     public void StartButton()
     {
         mainMenuPanel.SetActive(false);
-        gameManager.StartGame();
-        inGameUI.SetActive(true);
+        gameManager.SwitchGameState(GameManager.GameState.Starting);
+        
     }
 
     public void PauseButton()
     {
-        gameManager.PauseGame();
+        gameManager.SwitchGameState(GameManager.GameState.Pause);
         pauseButton.SetActive(false);
         resumeButton.SetActive(true);
     }
 
     public void ResumeButton()
     {
-        gameManager.UnPauseGame();
+        gameManager.SwitchGameState(GameManager.GameState.Playing);
         resumeButton.SetActive(false);
         pauseButton.SetActive(true);
     }
@@ -42,12 +43,22 @@ public class UIManager : MonoBehaviour
         gameManager.leaderboardManager.SubmitScore();
         inGameUI.SetActive(false);
         gameOverPanel.SetActive(true);
-        gameManager.leaderboardManager.UpdateScores();
     }
 
     public void LeaderboardPanelOpen()
     {
         gameOverPanel.SetActive(false);
         leaderboardPanel.SetActive(true);
+    }
+
+    public void SwitchInGameUI()
+    {
+        inGameUI.SetActive(!inGameUI.activeSelf);//
+        inGameUI.SetActive(true);
+    }
+
+    public void SwitchInfoText()
+    {
+        infoText.SetActive(!infoText.activeSelf);
     }
 }

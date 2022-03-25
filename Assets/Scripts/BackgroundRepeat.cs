@@ -21,7 +21,7 @@ public class BackgroundRepeat : MonoBehaviour
 
     void Update()
     {
-        if (!gameManager.isGameOver && !gameManager.isGameOnPause)
+        if (gameManager.currentGameState != GameManager.GameState.Pause && gameManager.currentGameState != GameManager.GameState.GameOver)
         {
             Move();
             CheckRepeat();
@@ -30,7 +30,7 @@ public class BackgroundRepeat : MonoBehaviour
 
     private void Move()
     {
-        transform.Translate(Vector2.left * speed * Time.unscaledDeltaTime);
+        transform.Translate(speed * Time.unscaledDeltaTime * Vector2.left);
     }
 
     private void CheckRepeat()

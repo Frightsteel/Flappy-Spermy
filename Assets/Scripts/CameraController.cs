@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private LeanTweenType easeType;
 
-    public int isCameraMoved = 0;
+    public static int isCameraMoved = 0;
 
     private void Awake()
     {
@@ -30,14 +30,13 @@ public class CameraController : MonoBehaviour
         else
         {
             transform.position = new Vector3(0.0f, transform.position.y, transform.position.z);
-            gameManager.ResumeGame();
         }
 
     }
 
     private void OnComplete()
     {
-        gameManager.ResumeGame();
+        isCameraMoved = 1;
         PlayerPrefs.SetInt("isCameraMoved", 1);
     }
 }

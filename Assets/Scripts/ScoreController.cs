@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using LootLocker.Requests;
 using TMPro;
 using UnityEngine;
 
@@ -12,11 +13,16 @@ public class ScoreController : MonoBehaviour
     public TextMeshProUGUI gameOverBestScoreText;
 
     public int score = 0;
-    public int bestScore;
+    public int bestScore = 0;
 
     private void Start()
     {
-        bestScore = PlayerPrefs.GetInt("bestScore");
+        if (PlayerPrefs.HasKey("BestScore"))
+        {
+            //Debug.Log("parasha");
+        }
+        bestScore = PlayerPrefs.GetInt("BestScore");
+        //Debug.Log(bestScore);
     }
 
     public void SaveScore()
@@ -24,7 +30,7 @@ public class ScoreController : MonoBehaviour
         if (score > bestScore)
         {
             bestScore = score;
-            PlayerPrefs.SetInt("bestScore", bestScore);
+            PlayerPrefs.SetInt("BestScore", bestScore);
         }
     }
 

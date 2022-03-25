@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,13 +27,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Jump();
+        Flap();
         CheckBorder();
     }
 
-    public void Jump()
+    public void Flap()
     {
-        if (/*Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began*/Input.GetKeyDown(KeyCode.Space) && !gameManager.isGameOver && !gameManager.isGameOnPause)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId) /*Input.GetKeyDown(KeyCode.Space)*/ && gameManager.currentGameState == GameManager.GameState.Playing)
         {
             playerRB.velocity = new Vector2(0, yForce);
             playerAS.PlayOneShot(jumpSound, 0.5f);
@@ -59,12 +60,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Block") && !gameManager.isGameOver)
+        if (collision.CompareTag("Block") && gameManager.currentGameState == GameManager.GameState.Playing)
         {
-            gameManager.isGameOver = true;
+            //gameManager.isGameOver = true;
             playerAnim.SetBool("death", true);
-            gameManager.audioManager.GameOverSoundPlay();
-            gameManager.uIManager.GameOverMenuOpen();
+            gameManager.SwitchGameState(GameManager.GameState.GameOver);
         }
 
         
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Entry") && !gameManager.isGameOver)
+        if (collision.CompareTag("Entry") && gameManager.currentGameState == GameManager.GameState.Playing)
         {
             gameManager.scoreController.UpdateScore();
         }
