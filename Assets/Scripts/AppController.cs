@@ -6,6 +6,14 @@ public class AppController : MonoBehaviour
 {
     public GameManager gameManager;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     private void OnApplicationFocus(bool focus)
     {
         //if (!focus)
