@@ -23,11 +23,11 @@ public class LeaderboardManager : MonoBehaviour
         {
             if (response.success)
             {
-                //Debug.Log("Success 0");
+                Debug.Log("Success 0");
             }
             else
             {
-                //Debug.Log("Failed 0");
+                Debug.Log("Failed 0");
             }
         });
     }
@@ -52,7 +52,7 @@ public class LeaderboardManager : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Failed 2");
+                Debug.Log("Failed 2");
             }
         });
 
@@ -65,7 +65,7 @@ public class LeaderboardManager : MonoBehaviour
             }
             else
             {
-               //Debug.Log("Failed 3");
+               Debug.Log("Failed 3");
             }
         });
     }
@@ -85,7 +85,7 @@ public class LeaderboardManager : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Failed 1");
+                Debug.Log("Failed 1");
             }
         });
     }
